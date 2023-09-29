@@ -84,7 +84,7 @@ class App extends Component {
         {/* <Link to={"/home"} className="navbar-brand">
             PREPARATORIA
           </Link> */}
-          <div className="navbar-nav mr-auto">
+          <div className="navbar-nav mr-auto" style={{ marginLeft: '5%'}}>
             <li className="nav-item">
               <Link to={"/home"} className="nav-link">
                 INICIO
@@ -110,13 +110,13 @@ class App extends Component {
 
     
  
-            {showAdminBoard && (
+            {/* {showAdminBoard && (
               <li className="nav-item">
               <Link to={"/tutorials"} className="nav-link">
                 Alumnos y P.F.
               </Link>
               </li>
-            )}  
+            )}   */}
 
             {showModeratorBoard && (
               <li className="nav-item">
