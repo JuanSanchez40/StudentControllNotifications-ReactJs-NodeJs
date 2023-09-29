@@ -31,7 +31,8 @@
     "regex": "^0.1.1",
     "sequelize": "^6.25.1",
     "styled-components": "^5.3.6",
-    "validator": "^13.7.0"
+    "validator": "^13.7.0",
+    "webpack-dev-middleware": "^6.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
