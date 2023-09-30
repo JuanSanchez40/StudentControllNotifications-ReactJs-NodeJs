@@ -535,7 +535,7 @@ export class BoardAdmin extends Component {
               <div  >
               <section>
                     <div className="containerImage sizeImageA" >
-                    <img src={`http://localhost:8080/${imagen}`} alt="meme" className="containerpicture" />
+                    <img src={`https://apiwebservice-eb09.onrender.com/${imagen}`} alt="meme" className="containerpicture" />
                     </div>
               </section>
               </div>
@@ -588,7 +588,7 @@ export class BoardAdmin extends Component {
               <div  >
               <section>
                     <div className="containerImageTutor sizeImageT">
-                    <img src={`http://localhost:8080/${imagenTutor}`} alt="meme" class="containerpictureTutor" />
+                    <img src={`https://apiwebservice-eb09.onrender.com/${imagenTutor}`} alt="meme" class="containerpictureTutor" />
                     </div>
               </section>
               </div>
