@@ -2,6 +2,14 @@ import React, { Component } from "react";
 
 import UserService from "../services/user.service";
 
+
+
+import './board-admin.component.css';
+
+
+import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+
 export default class Home extends Component {
   constructor(props) {
     super(props);

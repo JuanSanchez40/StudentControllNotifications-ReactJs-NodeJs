@@ -7,8 +7,8 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import './board-admin.component.css';
 import { TextField, Dialog } from '@material-ui/core';
-import Button from "@mui/material/Button";
-// import Button from '@material-ui/core/Button';
+//import Button from "@mui/material/Button";
+import Button from '@material-ui/core/Button';
 import Select from "@material-ui/core/Select";
 import PersonIcon from '@material-ui/icons/Person';
 import Radio from '@material-ui/core/Radio';
@@ -24,9 +24,6 @@ import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import NotificationService from "../services/notificacionAlumnos.service";
 
 import Clear from '@material-ui/icons/Clear';
-
-
-
 
 export class BoardAdmin extends Component {
   constructor(props) {
