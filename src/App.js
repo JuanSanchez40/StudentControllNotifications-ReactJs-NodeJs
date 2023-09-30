@@ -175,7 +175,7 @@ class App extends Component {
                 </Link>
               </li>
               <li className="nav-item">
-                <a href="/home" className="nav-link" onClick={this.logOut}>
+                <a href="/" className="nav-link" onClick={this.logOut}>
                   SALIR
                 </a>
               </li>
