@@ -48,16 +48,14 @@ export class BoardAdmin extends Component {
       addTutorFlag: false,
       disabledEnviarButton: true,
       turno: '',
-      textAreaValue: '',
+      textAreaValueMensaje: '',
       textAreaValueTitle: '',
+      mensajeNotificacion: '',
       titleFlag: false,
       textMessage: false,
       dialogOn: false,
       addsomething: false,
-      
-
     };
-    
   }
 
   componentDidMount = async () =>  {
@@ -86,13 +84,15 @@ export class BoardAdmin extends Component {
   }
 
   handleChangeSelect = async (value) => {
-    await this.setState({ selectTypeMessage: value })
+    await this.setState({ selectTypeMessage: value , textAreaValueMensaje: ''})
 
     if( value === '10' ){
-      this.setState({ singleFlag: true, topicFlag: false, topicTutoresFlag: false, turno: '' });
+     await this.setState({ singleFlag: true, topicFlag: false, textAreaValueTitle: '', disabledEnviarButton: true});
+     
     }
     else if( value === '20' ){
-      this.setState({ topicFlag: true, topicTutoresFlag: false, singleFlag: false });
+    await  this.setState({ topicFlag: true, singleFlag: false, textAreaValueMensaje: '', disabledEnviarButton: true});
+    
       this.setState({ addAlumnoFlag: false});
       this.setState({ addTutorFlag: false});
     }else{
@@ -102,34 +102,35 @@ export class BoardAdmin extends Component {
 
   handleChangesTitle(e) {
     this.setState({ textAreaValueTitle: e.target.value });
-    console.log(this.state.message.length);
+    // console.log(this.state.message.length);
       
-    if(e.target.value.length > 3 && this.state.textAreaValue.length > 3  && this.state.message.length > 1){
+    if(e.target.value.length > 3 && this.state.textAreaValueMensaje.length > 3  ){
       this.setState({ disabledEnviarButton: false});
     } else {
       this.setState({ disabledEnviarButton: true });
     }
-     if(e.target.value.length < 3 && this.state.textAreaValue.length > 0 ) {
-      this.setState({ disabledEnviarButton: true });
-    }
-  
-      console.log(this.state.textAreaValueTitle);
+    
   }
 
-  handleChange(e) {
-    this.setState({ textAreaValue: e.target.value });
-    console.log(this.state.message.length);
-    if((e.target.value.length > 3 && this.state.textAreaValue.length > 3 && this.state.message.length > 1) && (this.state.addAlumnoFlag === true || this.state.addTutorFlag === true) ){
+  handleChangeMensaje(e) {
+    this.setState({ textAreaValueMensaje: e.target.value });
+
+   if( this.state.selectTypeMessage === '10' ){
+    if(e.target.value.length > 3  ){
       this.setState({ disabledEnviarButton: false});
     } 
     else {
-      this.setState({ disabledEnviarButton: true });
-    }
+       this.setState({ disabledEnviarButton: true });
+   }
+   }else if(this.state.selectTypeMessage === '20'  ){
 
-    if(e.target.value.length < 3 && this.state.textAreaValueTitle.length > 0 ) {
-      this.setState({ disabledEnviarButton: true });
-    }
-  
+    if(e.target.value.length > 3 && this.state.textAreaValueTitle.length > 3 ){
+      this.setState({ disabledEnviarButton: false});
+    } 
+    else {
+       this.setState({ disabledEnviarButton: true });
+   }    
+   }
   }
 
   handleChanges = name => event => {
@@ -213,11 +214,6 @@ export class BoardAdmin extends Component {
     }
   };
 
-  handleChangeSelectTurno = async (value) => {
-    await this.setState({ turno: value })
-   
-  };
-
   onChange = (event) => {
   
     this.setState({ selectedValue: event.target.value });
@@ -231,65 +227,69 @@ export class BoardAdmin extends Component {
 
   handleOnSubmit(){
 
-    if(this.state.singleFlag == true && this.state.topicFlag == false){ 
+    if(this.state.message.length > 0){
+      if(this.state.singleFlag == true && this.state.topicFlag == false){ 
 
-      const alumno = this.state.message.slice(1,2);
-      const cuentaAlumno = this.state.message.slice(2,3);
-      const cuentaAlumnoInt = parseInt(this.state.message.slice(2,3));
-     // const titulo = this.state.textAreaValueTitle;
-      const values = this.state.textAreaValue;
-     
-      var data = {   
-        chatId: cuentaAlumnoInt,
-        title: alumno[0],
-        value: values,
-      //  imageUrl: 
-        type: "CHAT",
-        email: cuentaAlumno[0],
-        
-      };
-      console.log(data);
-      NotificationService.create(data)
-         .then(response => {
-           this.setState({          
-            chatId: response.data.chatId,
-            title: response.data.title,
-            value: response.data.value,
-          //  imageUrl: response.data.value,
-            type: response.data.type,
-            email: response.data.email,
-            
+        const alumno = this.state.message.slice(1,2);
+        const cuentaAlumno = this.state.message.slice(2,3);
+        const cuentaAlumnoInt = parseInt(this.state.message.slice(2,3));
+       // const titulo = this.state.textAreaValueTitle;
+        const values = this.state.textAreaValue;
+       
+        var data = {   
+          chatId: cuentaAlumnoInt,
+          title: alumno[0],
+          value: values,
+        //  imageUrl: 
+          type: "CHAT",
+          email: cuentaAlumno[0],
+          
+        };
+        console.log(data);
+        NotificationService.create(data)
+           .then(response => {
+             this.setState({          
+              chatId: response.data.chatId,
+              title: response.data.title,
+              value: response.data.value,
+            //  imageUrl: response.data.value,
+              type: response.data.type,
+              email: response.data.email,
+              
+             });
+             console.log(response.data);
+           })
+           .catch(e => {
+             console.log(e);
            });
-           console.log(response.data);
-         })
-         .catch(e => {
-           console.log(e);
-         });
-      this.setState({ dialogOn: false });
-    } else if (this.state.topicFlag == true && this.state.singleFlag == false) {
-
-      const titulo = this.state.textAreaValueTitle
-      const values = this.state.textAreaValue;
-      var datas = {         
-        title: titulo,
-        body: values,
-        imageUrl: ''
-      };
-      console.log(datas);
-      NotificationService.create(datas)
-         .then(response => {
-           this.setState({          
-            title: response.datas.title,
-            body: response.datas.body,
-            imageUrl: response.datas.body,
-            
+        this.setState({ dialogOn: false });
+      } else if (this.state.topicFlag == true && this.state.singleFlag == false) {
+  
+        const titulo = this.state.textAreaValueTitle
+        const values = this.state.textAreaValue;
+        var datas = {         
+          title: titulo,
+          body: values,
+          imageUrl: ''
+        };
+        console.log(datas);
+        NotificationService.create(datas)
+           .then(response => {
+             this.setState({          
+              title: response.datas.title,
+              body: response.datas.body,
+              imageUrl: response.datas.body,
+              
+             });
+             console.log(response.datas);
+           })
+           .catch(e => {
+             console.log(e);
            });
-           console.log(response.datas);
-         })
-         .catch(e => {
-           console.log(e);
-         });
-         this.setState({ dialogOn: false });
+           this.setState({ dialogOn: false });
+      }
+    }else{
+               this.setState({mensajeNotificacion: "Debe agregar un alumno o tutor para enviar el mensaje!"});
     }
   } 
 
@@ -441,12 +441,16 @@ export class BoardAdmin extends Component {
                           rowsMax={5} 
                           rows={5}
                           maxLength={3}
-                          value={this.state.textAreaValue}
-                          onChange={(e) => this.handleChange(e)}
+                          value={this.state.textAreaValueMensaje}
+                          onChange={(e) => this.handleChangeMensaje(e)}
                         />
                   </div>
            
              </div> :null}
+             {this.state.message.length > 0?
+             <div>{this.state.mensajeNotificacion}</div>
+             :null
+             }
                   </Grid>                      
                 </Grid>                
             </Grid>            
