@@ -1,3 +1,5 @@
+
+
 ## React JWT Authentication (without Redux) example
 
 In this tutorial, we’re gonna build a React JWT Authentication example with LocalStorage, React Router, Axios and Bootstrap (without Redux). I will show you:
@@ -45,4 +47,7 @@ yarn start
 Open [http://localhost:8081](http://localhost:8081) to view it in the browser.
 
 The page will reload if you make edits.
+
+## user: admin
+## password: 12345678
 
